@@ -2,6 +2,9 @@ Smart Safe System (ESP32 & Telegram Bot Integration)
 This project aims to create a secure smart safe system that can be remotely controlled using an ESP32 microcontroller,
 a servo motor, a buzzer, and the Telegram Bot API. Unauthorized access attempts are instantly reported via Telegram,
 while password entry and safe status control can also be managed through the RemoteXY mobile application.
+
+RemoteXY Interface Link:
+https://remotexy.com/en/editor/02d9a74596768b308f4111d31e3b0b1a/
 ________________________________________
 Features
 
