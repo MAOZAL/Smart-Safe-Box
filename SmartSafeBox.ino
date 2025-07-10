@@ -23,7 +23,7 @@ uint8_t RemoteXY_CONF[] = { 255,15,0,0,0,89,0,19,0,0,0,0,24,1,200,84,1,1,4,0,
   1,65,59,73,22,3,45,31,67,111,110,102,105,114,109,0 };
 
 struct {
-  char edit_sifre[14];
+  char edit_passWord[14];
   uint8_t button_confirm;
   uint8_t connect_flag;
 } RemoteXY;
@@ -149,7 +149,7 @@ void handleRemoteXYPasswordEntry() {
   if (RemoteXY.button_confirm) {
     RemoteXY.button_confirm = 0;
 
-    String enteredInput = RemoteXY.edit_sifre;
+    String enteredInput = RemoteXY.edit_passWord;
     String trimmedInput = enteredInput;
     trimmedInput.trim();
 
@@ -173,7 +173,7 @@ void handleRemoteXYPasswordEntry() {
           bot.sendMessage(SECOND_USER_CHAT_ID, "Smart Safe Box: The Safe Box is already closed (via RemoteXY).", "");
         }
       }
-      RemoteXY.edit_sifre[0] = '\0';
+      RemoteXY.edit_passWord[0] = '\0';
       return;
     }
 
@@ -183,7 +183,7 @@ void handleRemoteXYPasswordEntry() {
       if (!OWNER_CHAT_ID.isEmpty()) {
           bot.sendMessage(OWNER_CHAT_ID, "Smart Safe Box: Invalid password attempt from RemoteXY (length error)!", "");
       }
-      RemoteXY.edit_sifre[0] = '\0';
+      RemoteXY.edit_passWord[0] = '\0';
       return;
     }
 
@@ -222,7 +222,7 @@ void handleRemoteXYPasswordEntry() {
         if (!SECOND_USER_CHAT_ID.isEmpty()) bot.sendMessage(SECOND_USER_CHAT_ID, "Smart Safe Box: The Safe Box is in danger! Alarm has been activated!", "");
       }
     }
-    RemoteXY.edit_sifre[0] = '\0';
+    RemoteXY.edit_passWord[0] = '\0';
   }
 }
 
