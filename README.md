@@ -3,10 +3,39 @@ This project aims to create a secure smart safe system that can be remotely cont
 a servo motor, a buzzer, and the Telegram Bot API. Unauthorized access attempts are instantly reported via Telegram,
 while password entry and safe status control can also be managed through the RemoteXY mobile application.
 
-RemoteXY Interface Link:
+RemoteXY Interface Link and QR:
 https://remotexy.com/en/editor/02d9a74596768b308f4111d31e3b0b1a/
 
 <img width="120" height="121" alt="remoteXYQR" src="https://github.com/user-attachments/assets/4324871f-65d3-4eb4-be0b-acf7298c2b90" />
+
+
+Telegram Chat Id Connect
+
+The following comment lines show the Telegram Chat  ID of the person connected via Telegram on the Arduino serial monitor.
+
+    // Serial.print("Message Chat ID: "); Serial.println(chat_id); 
+    // Serial.print("Message From (Name): "); Serial.println(from_name); 
+    // Serial.print("Message Text: "); Serial.println(text); 
+
+We delete the two slashes at the beginning of the comment lines and activate the codes.
+
+Then, we upload the program to the ESP32.
+
+After the program is uploaded, the person who wants to connect sends any message through the bot.
+
+Then, the Arduino serial monitor displays the received message, along with the sender's name and their Telegram chat ID.
+
+Then, we take the chat ID shown there and,
+if it belongs to the owner, we write it inside the quotation marks of:
+`const String OWNER_CHAT_ID = "owner_Id";`
+
+or, if it belongs to the second user:
+`const String SECOND_USER_CHAT_ID = "secondUser_ID";`
+
+In this way, we have successfully linked the person or people to the project.
+
+
+
 
 ________________________________________
 Features
