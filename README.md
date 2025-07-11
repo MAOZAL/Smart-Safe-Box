@@ -5,6 +5,8 @@ while password entry and safe status control can also be managed through the Rem
 
 RemoteXY Interface Link:
 https://remotexy.com/en/editor/02d9a74596768b308f4111d31e3b0b1a/
+<img width="380" height="381" alt="remoteXYQR" src="https://github.com/user-attachments/assets/4324871f-65d3-4eb4-be0b-acf7298c2b90" />
+
 ________________________________________
 Features
 
