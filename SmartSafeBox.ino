@@ -233,7 +233,7 @@ void handleNewMessages(int numNewMessages) {
     String text = bot.messages[i].text;
     String from_name = bot.messages[i].from_name;
 
-    // The following comment lines provide the Telegram ID of the person connected via Telegram
+    // The following comment lines show the Telegram ID of the person connected via Telegram on the Arduino serial monitor.
     // Serial.print("Message Chat ID: "); Serial.println(chat_id); // Remove the // at the beginning of this line
     // Serial.print("Message From (Name): "); Serial.println(from_name); // Remove the // at the beginning of this line
     // Serial.print("Message Text: "); Serial.println(text); // Remove the // at the beginning of this line
