@@ -8,19 +8,19 @@
 #define REMOTEXY_MODE__WIFI_CLOUD
 #include <RemoteXY.h>
 
-#define REMOTEXY_WIFI_SSID "WIFI_SSID" // The name of the WiFi network to connect to
-#define REMOTEXY_WIFI_PASSWORD "WIFI_PASSWORD" // The password of the WiFi network to connect to
-#define REMOTEXY_CLOUD_SERVER "CLOUD_SERVER" // We get the server part from the RemoteXY My Cloud tokens section
-#define REMOTEXY_CLOUD_PORT 1234 // We get the device port part from the RemoteXY My Cloud tokens section
-#define REMOTEXY_CLOUD_TOKEN "CLOUD_TOKEN" // We get the token part from the RemoteXY My Cloud tokens section
+#define REMOTEXY_WIFI_SSID "WIFI_SSID"          // The name of the WiFi network to connect to
+#define REMOTEXY_WIFI_PASSWORD "WIFI_PASSWORD"  // The password of the WiFi network to connect to
+#define REMOTEXY_CLOUD_SERVER "CLOUD_SERVER"    // We get the server part from the RemoteXY My Cloud tokens section
+#define REMOTEXY_CLOUD_PORT 1234                // We get the device port part from the RemoteXY My Cloud tokens section
+#define REMOTEXY_CLOUD_TOKEN "CLOUD_TOKEN"      // We get the token part from the RemoteXY My Cloud tokens section
 
 // RemoteXY GUI Configuration - This part should be copied from the RemoteXY EDITOR!"
 #pragma pack(push, 1)
-uint8_t RemoteXY_CONF[] = { 255,15,0,0,0,89,0,19,0,0,0,0,24,1,200,84,1,1,4,0,
-  7,8,36,183,19,102,192,6,16,203,14,129,41,6,114,10,64,78,69,110,
-  116,101,114,32,84,104,101,32,83,109,97,114,116,32,83,97,102,101,32,66,
-  111,120,0,129,77,22,42,9,64,94,80,97,115,115,119,111,114,100,58,0,
-  1,66,59,73,22,3,45,31,67,111,110,102,105,114,109,0 };
+uint8_t RemoteXY_CONF[] = { 255, 15, 0, 0, 0, 89, 0, 19, 0, 0, 0, 0, 24, 1, 200, 84, 1, 1, 4, 0,
+                            7, 8, 36, 183, 19, 102, 192, 6, 16, 203, 14, 129, 41, 6, 114, 10, 64, 78, 69, 110,
+                            116, 101, 114, 32, 84, 104, 101, 32, 83, 109, 97, 114, 116, 32, 83, 97, 102, 101, 32, 66,
+                            111, 120, 0, 129, 77, 22, 42, 9, 64, 94, 80, 97, 115, 115, 119, 111, 114, 100, 58, 0,
+                            1, 66, 59, 73, 22, 3, 45, 31, 67, 111, 110, 102, 105, 114, 109, 0 };
 
 struct {
   char edit_passWord[14];
@@ -58,7 +58,7 @@ unsigned long safeBoxOpenTime = 0;
 const long AUTO_CLOSE_DELAY_MS = 30000;  // 30 saniye
 
 // --- Telegram Chat IDs ---
-const String OWNER_CHAT_ID = "owner_Id";       // Chat ID of the SafeBox Owner
+const String OWNER_CHAT_ID = "owner_Id";             // Chat ID of the SafeBox Owner
 const String SECOND_USER_CHAT_ID = "secondUser_ID";  // Chat ID of the Second User
 
 // --- Persistent Data Storage ---
@@ -181,7 +181,7 @@ void handleRemoteXYPasswordEntry() {
     if (!isValidPasswordLength(enteredInput.length())) {
       // BOT_TOKEN check removed.
       if (!OWNER_CHAT_ID.isEmpty()) {
-          bot.sendMessage(OWNER_CHAT_ID, "Smart Safe Box: Invalid password attempt from RemoteXY (length error)!", "");
+        bot.sendMessage(OWNER_CHAT_ID, "Smart Safe Box: Invalid password attempt from RemoteXY (length error)!", "");
       }
       RemoteXY.edit_passWord[0] = '\0';
       return;
@@ -192,7 +192,7 @@ void handleRemoteXYPasswordEntry() {
       deactivateAlarm();
       openSafeBoxDoor("Owner (RemoteXY)");
 
-     // Send notification to second user only
+      // Send notification to second user only
       // BOT_TOKEN check removed.
       if (!SECOND_USER_CHAT_ID.isEmpty()) {
         bot.sendMessage(SECOND_USER_CHAT_ID, "Smart Safe Box: The Safe Box was opened by the owner (via RemoteXY).", "");
@@ -212,7 +212,7 @@ void handleRemoteXYPasswordEntry() {
       wrongAttempts++;
 
       if (wrongAttempts == 1) {
-       // BOT_TOKEN check removed.
+        // BOT_TOKEN check removed.
         if (!OWNER_CHAT_ID.isEmpty()) bot.sendMessage(OWNER_CHAT_ID, "Smart Safe Box: Unauthorized access attempt from RemoteXY! (First incorrect attempt)", "");
         if (!SECOND_USER_CHAT_ID.isEmpty()) bot.sendMessage(SECOND_USER_CHAT_ID, "Smart Safe Box: Unauthorized access attempt from RemoteXY! (First incorrect attempt)", "");
       } else if (wrongAttempts >= MAX_WRONG_ATTEMPTS_BEFORE_ALARM) {
@@ -233,7 +233,7 @@ void handleNewMessages(int numNewMessages) {
     String text = bot.messages[i].text;
     String from_name = bot.messages[i].from_name;
 
-    // The following comment lines show the Telegram ID of the person connected via Telegram on the Arduino serial monitor.
+    // The following comment lines provide the Telegram ID of the person connected via Telegram
     // Serial.print("Message Chat ID: "); Serial.println(chat_id); // Remove the // at the beginning of this line
     // Serial.print("Message From (Name): "); Serial.println(from_name); // Remove the // at the beginning of this line
     // Serial.print("Message Text: "); Serial.println(text); // Remove the // at the beginning of this line
@@ -249,57 +249,60 @@ void handleNewMessages(int numNewMessages) {
       welcome += "You can type /change\_password \<new\_password> to change your password.\n ";
       // BOT_TOKEN check removed.
       bot.sendMessage(chat_id, welcome, "");
-    } 
-    else if (text == "/status") {
+    } else if (text == "/status") {
       String statusMessage = "Safe Box Status: ";
       statusMessage += isSafeBoxOpen ? "OPEN." : "CLOSE.";
       statusMessage += isAlarmActive ? " Alarm Active!" : " Alarm Inactive.";
       // BOT_TOKEN check removed.
       bot.sendMessage(chat_id, statusMessage, "");
-    } 
-    else if (text == "/alarm_off") {
-      if (isAlarmActive) {
-        deactivateAlarm();
-        // BOT_TOKEN check removed.
-        bot.sendMessage(chat_id, "The alarm was turned off via Telegram.", "");
+    } else if (text == "/alarm_off") {
+      // AUTHORIZATION CHECK ADDED
+      if (isOwner || isSecondUser) {  // If the message sender is the owner or the second user
+        if (isAlarmActive) {
+          deactivateAlarm();
+          bot.sendMessage(chat_id, "The alarm was turned off via Telegram.", "");
 
-        String otherUserChatId = "";
-        if (isOwner && !SECOND_USER_CHAT_ID.isEmpty()) {
-          otherUserChatId = SECOND_USER_CHAT_ID;
-        } else if (isSecondUser && !OWNER_CHAT_ID.isEmpty()) {
-          otherUserChatId = OWNER_CHAT_ID;
-        }
+          String otherUserChatId = "";
+          if (isOwner && !SECOND_USER_CHAT_ID.isEmpty()) {
+            otherUserChatId = SECOND_USER_CHAT_ID;
+          } else if (isSecondUser && !OWNER_CHAT_ID.isEmpty()) {
+            otherUserChatId = OWNER_CHAT_ID;
+          }
 
-        if (!otherUserChatId.isEmpty()) {  // Send if the other user ID is not empty
-          bot.sendMessage(otherUserChatId, "Smart Safe Box: The alarm was turned off by " + from_name + "", "");
+          if (!otherUserChatId.isEmpty()) {
+            bot.sendMessage(otherUserChatId, "Smart Safe Box: The alarm was turned off by " + from_name + "", "");
+          }
+        } else {
+          bot.sendMessage(chat_id, "There is no active alarm at the moment.", "");
         }
-      } else {
-        // BOT_TOKEN check removed.
-        bot.sendMessage(chat_id, "There is no active alarm at the moment.", "");
+      } else {  // If the user is unauthorized
+        bot.sendMessage(chat_id, "You do not have permission to use this command or your Chat ID is not recognized.", "");
       }
-    } 
-    else if (text == "/close") {
-      if (isSafeBoxOpen) {
-        closeSafeBoxDoor();
+    } else if (text == "/close") {
+      //AUTHORIZATION CHECK ADDED
+      if (isOwner || isSecondUser) {  // If the message sender is the owner or the second user
+        if (isSafeBoxOpen) {
+          closeSafeBoxDoor();
 
-        // BOT_TOKEN check removed.
-        bot.sendMessage(chat_id, "Smart Safe Box: The Safe Box was closed by you via Telegram.", "");
+          bot.sendMessage(chat_id, "Smart Safe Box: The Safe Box was closed by you via Telegram.", "");
 
-        String otherUserChatId = "";
-        if (isOwner && !SECOND_USER_CHAT_ID.isEmpty()) {
-          otherUserChatId = SECOND_USER_CHAT_ID;
-        } else if (isSecondUser && !OWNER_CHAT_ID.isEmpty()) {
-          otherUserChatId = OWNER_CHAT_ID;
+          String otherUserChatId = "";
+          if (isOwner && !SECOND_USER_CHAT_ID.isEmpty()) {
+            otherUserChatId = SECOND_USER_CHAT_ID;
+          } else if (isSecondUser && !OWNER_CHAT_ID.isEmpty()) {
+            otherUserChatId = OWNER_CHAT_ID;
+          }
+
+          if (!otherUserChatId.isEmpty()) {
+            bot.sendMessage(otherUserChatId, "Smart Safe Box: The Safe Box was closed by " + from_name + " via Telegram.", "");
+          }
+        } else {
+          bot.sendMessage(chat_id, "The Safe Box is already closed.", "");
         }
-
-        if (!otherUserChatId.isEmpty()) {  // Send if the other user's ID is not empty
-          bot.sendMessage(otherUserChatId, "Smart Safe Box: The Safe Box was closed by " + from_name + " via Telegram.", "");
-        }
-      } else {
-        // BOT_TOKEN check removed.
-        bot.sendMessage(chat_id, "The Safe Box is already closed.", "");
+      } else {  // If the user is unauthorized
+        bot.sendMessage(chat_id, "You do not have permission to use this command or your Chat ID is not recognized.", "");
       }
-    } else if (text.startsWith("/change_password ")) { // Password must be entered in the format change_password new_password
+    } else if (text.startsWith("/change_password ")) {  // Password must be entered in the format change_password new_password
       String newPassword = text.substring(17);
 
       if (!isValidPasswordLength(newPassword.length())) {
