@@ -134,7 +134,12 @@ Setup and Usage
 
   o	Open the following link in your browser to view chat_id values:
 
-  https://api.telegram.org /bot<YOUR_BOT_TOKEN>/getUpdates
+  https://api.telegram.org/bot<YOUR_BOT_TOKEN>/getUpdates
+  
+  Example usage:
+  https://api.telegram.org/bot123456789:ABCdEfGhIJklmnOPQRstuvwxYZ/getUpdates
+
+
 
 2. Set Up Arduino IDE (or PlatformIO)
    
